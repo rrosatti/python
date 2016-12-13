@@ -5,6 +5,7 @@ from sklearn import preprocessing, cross_validation, svm
 from sklearn.linear_model import LinearRegression 
 import matplotlib.pyplot as plt
 from matplotlib import style
+import pickle
 
 style.use('ggplot')
 
@@ -62,11 +63,20 @@ X = X[:-forecast_out]
 
 df.dropna(inplace=True)
 y = np.array(df['label'])
-y = np.array(df['label'])
 
 X_train, X_test, y_train, y_test = cross_validation.train_test_split(X, y, test_size=0.2)
-clf = LinearRegression()
-clf.fit(X_train, y_train)
+
+#clf = LinearRegression()
+#clf.fit(X_train, y_train)
+
+# Here we save the classifier, so we can avoid training it again and again everytime the script runs
+#with open('linearregression.pickle', 'wb') as file:  #wb - write bytes
+#	pickle.dump(clf, file)
+
+# Doing this we can comment the above lines after saving it for the first time 
+pickle_in = open('linearregression.pickle', 'rb')
+clf = pickle.load(pickle_in)
+
 accuracy = clf.score(X_test, y_test)
 
 # Predicting the future (next 30 days)

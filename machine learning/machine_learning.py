@@ -25,7 +25,7 @@ df.fillna(-99999, inplace=True)
 
 # math.ceil (teto) Ex: len(df) = 10.2. So, it will turn it into 11. (rounds everything up)
 # 0.01 - we will want to predict the 1% of the data frame
-forecast_out = int(math.ceil(0.01*len(df)))
+forecast_out = int(math.ceil(0.1*len(df)))
 
 df['label'] = df[forecast_col].shift(-forecast_out)
 #df.dropna(inplace=True)

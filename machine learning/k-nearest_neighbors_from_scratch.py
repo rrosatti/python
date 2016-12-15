@@ -88,7 +88,7 @@ for group in test_set:
 		if group == vote:
 			correct += 1
 		else:
-			print confidence
+			print(confidence)
 		total += 1
 
-print "Accuracy: ", correct/total
+print("Accuracy: ", correct/total)

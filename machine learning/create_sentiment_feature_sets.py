@@ -101,5 +101,5 @@ def create_feature_sets_and_labels(pos, neg, test_size=0.1):
 
 if __name__ == '__main__':
 	train_x, train_y, test_x, test_y = create_feature_sets_and_labels('pos.txt', 'neg.txt', test_size=0.1)
-	with open('sentiment_set.pickle', 'wb') as f:
+	with open('C:/Users/rodri/OneDrive/Documentos/python/data/sentiment_set.pickle', 'wb') as f:
 		pickle.dump([train_x, train_y, test_x, test_y], f)

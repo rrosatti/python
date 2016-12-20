@@ -1,0 +1,21 @@
+import matplotlib.pyplot as plt
+
+days = [1,2,3,4,5]
+
+sleeping = [7,8,6,11,7]
+eating = [2,3,4,3,2]
+working = [7,8,7,2,2]
+playing = [8,5,7,8,13]
+
+slices = [7,2,2,13]
+activities = ['sleeping', 'eating', 'working', 'playing']
+colors = ['m', 'c', 'b', 'g']
+
+# startangle = 90 (start the pie with a 90 degrees)
+# explode will "explode" the chosen slice ( in this case we are only 'exploding' the 'eating' slice)
+# autopct add the percentage of each slice
+plt.pie(slices, labels=activities, colors=colors, startangle=90, shadow=True, explode=(0.1,0,0,0), autopct='%1.1f%%')
+
+plt.title('Interesting Graph\nSubtitle?')
+#plt.legend()
+plt.show()

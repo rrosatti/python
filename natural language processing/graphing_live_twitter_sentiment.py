@@ -29,7 +29,7 @@ def animate(i):
 
 		xar.append(x)
 		yar.append(y)
-
+ 
 	ax1.clear()
 	ax1.plot(xar, yar)
 

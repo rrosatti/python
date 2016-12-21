@@ -8,8 +8,8 @@ import urllib
 import datetime as dt
 
 #style.use('ggplot')
-#style.use('fivethirtyeight')
-style.use('dark_background')
+style.use('fivethirtyeight')
+#style.use('dark_background')
 
 # fmt - format
 def bytespdate2num(fmt, encoding='utf-8'):
@@ -42,66 +42,8 @@ def graph_data(stock):
 	date, close_price, high_price, low_price, open_price, volume = np.loadtxt(stock_data, 
 																			delimiter=',',
 																			unpack=True,
-																			# %Y = full year 2015
-																			# %y = partial year 15
-																			# %m = number month
-																			# %d = number day
-																			# %H = hours
-																			# %M = minutes
-																			# %S = seconds 
-																			# Ex: 12-20-2016
-																			# 	  %m-%d-%Y 
 																			converters={0: bytespdate2num('%Y%m%d')})
 	
-	# converting unix time
-	'''
-	date, close_price, high_price, low_price, open_price, volume = np.loadtxt(stock_data, 
-																			delimiter=',',
-																			unpack=True)
-	dateconv = np.vectorize(dt.datetime.fromtimestamp)
-	date = dateconv(date)
-	'''
-
-	# customization stuff
-	'''
-	# '-' = line	
-	ax1.plot_date(date, close_price, '-', label='Price')
-	
-	# fill between 0 and the close price	
-	#ax1.fill_between(date, close_price, 0, alpha=0.3, label='Price')
-	
-	# fill between 12 and the close price
-	#ax1.fill_between(date, close_price, 12, alpha=0.3, label='Price')
-	
-	# fill between teh first value and the close price
-	#ax1.fill_between(date, close_price, close_price[0], alpha=0.3, label='Price')
-
-	# using some logic
-	ax1.fill_between(date, close_price, close_price[0], where=(close_price > close_price[0]), facecolor='g', alpha=0.3)
-	ax1.fill_between(date, close_price, close_price[0], where=(close_price < close_price[0]), facecolor='r', alpha=0.3)
-
-
-	for label in ax1.xaxis.get_ticklabels():
-		# 45 degress of the rotation
-		label.set_rotation(45)
-
-	# add a line grid 'behind' the graph
-	ax1.grid(True)# color='g', linestyle='-')
-	#ax1.xaxis.label.set_color('c')
-	#ax1.yaxis.label.set_color('r')
-	# set specific numbers for y-axis
-	#ax1.set_yticks([0,25,50,75])
-
-	# spines are like the "frame" of the graph
-	ax1.spines['left'].set_color('c')
-	ax1.spines['right'].set_visible(False)
-	ax1.spines['top'].set_visible(False)
-	ax1.spines['left'].set_linewidth(5)
-
-	# change the color of the x-axis (labels)
-	ax1.tick_params(axis='x', colors='#10151e')
-	'''
-
 	x = 0
 	y = len(date)
 	ohlc = []
@@ -122,10 +64,29 @@ def graph_data(stock):
 	ax1.xaxis.set_major_locator(mticker.MaxNLocator(10))
 	ax1.grid(True)
 
+	bbox_props = dict(boxstyle='round', fc='w', ec='k', lw=1)
+
+	ax1.annotate(str(close_price[-1]), (date[-1], close_price[-1]), 
+						xytext=(date[-1]+4, close_price[-1]), bbox=bbox_props)
+
+	# Adding annotation and text 
+	'''
+	# adding an annotation
+	# axis fraction - the text will stay at the same place 'whenever you go' (because of the fractions set in xytext)
+	ax1.annotate('Big News!', (date[11], high_price[11]), xytext=(0.8, 0.9), 
+								textcoords='axes fraction', 
+								arrowprops=dict(facecolor='grey', color='grey'))
+
+
+	font_dict = {'family': 'serif', 'color': 'darkred', 'size': 15}
+	# first two parameters are the 'coords' where the text will be placed
+	ax1.text(date[10], close_price[1], stock+' Prices', fontdict=font_dict	)
+	'''
+
 	plt.xlabel('Date')
 	plt.ylabel('Price')
 	plt.title(stock)
-	plt.legend()
+	#plt.legend()
 	# wspace and hspace correspond to padding between figures
 	plt.subplots_adjust(left=0.09, bottom=0.20, right=0.94, top=0.88, wspace=0.2, hspace=0)
 	plt.show()
